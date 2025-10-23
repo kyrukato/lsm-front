@@ -1,8 +1,8 @@
 export const environment = {
-  URL_AUTH: 'https://backlsm-production.up.railway.app/auth',
-  URL_DICTIONARY: 'https://backlsm-production.up.railway.app/dictionary',
-  URL_GUESS_LOCAL: 'https://backlsm-production.up.railway.app/guess-local',
-  URL_SEQUENCE_LOCAL: 'https://backlsm-production.up.railway.app/sequence-local',
-  URL_MEMORY_LOCAL: 'https://backlsm-production.up.railway.app/memory-local',
+  URL_AUTH: 'http://localhost:3001/auth',
+  URL_DICTIONARY: 'http://localhost:3001/dictionary',
+  URL_GUESS_LOCAL: 'http://localhost:3001/guess-local',
+  URL_SEQUENCE_LOCAL: 'http://localhost:3001/sequence-local',
+  URL_MEMORY_LOCAL: 'http://localhost:3001/memory-local',
   API_GEMINI: 'AIzaSyAmMOpbDGVAKj_XkZAkElOBeEJfkJtEzXA',
 };
