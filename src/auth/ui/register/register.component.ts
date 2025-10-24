@@ -15,6 +15,7 @@ interface RegisterBodyApi {
   name: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
+  nickname: FormControl<string>;
 }
 
 interface RegisterForm extends RegisterBodyApi {
@@ -45,6 +46,10 @@ export class RegisterComponent {
   registerForm = new FormGroup<RegisterForm>(
     {
       name: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      nickname: new FormControl('',{
         nonNullable: true,
         validators: [Validators.required],
       }),
