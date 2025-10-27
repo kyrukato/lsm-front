@@ -86,7 +86,7 @@ export const routes: Routes = [
               {
                 path: '',
                 loadComponent: () => 
-                  import('../memoryGame/ui/memory-local/levels/levels.component').then(
+                  import('../sequenceGame/ui/local/levels/levels.component').then(
                     (m) => m.LevelsComponent
                   ),
               },
