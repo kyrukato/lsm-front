@@ -21,6 +21,7 @@ import {
   LocalManagerService,
 } from '../../../shared/LocalManager/storage.servicee';
 import { SequenceUseCaseService } from '../../application/sequence-use-case.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-local',
@@ -35,6 +36,7 @@ export class LocalComponent implements OnInit {
   // Dependency Injection
   private _sequenceUseCase = inject(SequenceUseCaseService);
   private _decodeJwtService = inject(DecodeJwtService);
+  private _route = inject(ActivatedRoute);
 
   // Form Control
   searchControl = new FormControl('');
@@ -52,6 +54,7 @@ export class LocalComponent implements OnInit {
 
   isGameOver = signal(false);
   allSigns: ApiDictionaryContent[] = [];
+  level = 0;
 
   filteredItems: ApiDictionaryContent[] = [];
 
@@ -59,8 +62,9 @@ export class LocalComponent implements OnInit {
   private timer: any;
 
   ngOnInit() {
+    this.level = Number(this._route.snapshot.paramMap.get('level'));
     // Load content and initialize game
-    this._sequenceUseCase.getAllContent().subscribe((data) => {
+    this._sequenceUseCase.getAllContent(this.level).subscribe((data) => {
       this.allSigns = data;
       this.isLoading.set(false);
       this.startSequence();

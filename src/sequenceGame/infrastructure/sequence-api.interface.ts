@@ -3,7 +3,7 @@ import { ApiDictionaryContent } from '../../dictionary/infrastructure/models/dic
 import { SequenceGame } from './models/sequence-local-api.modal';
 
 export interface SequenceLocalGame {
-  getAllContent(): Observable<ApiDictionaryContent[]>;
+  getAllContent(level:number): Observable<ApiDictionaryContent[]>;
 
   getUserPoints(id: string): Observable<SequenceGame>;
 

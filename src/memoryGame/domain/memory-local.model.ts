@@ -10,3 +10,5 @@ export interface CardMemoryGameModel extends DictionaryContent {
   flipped: boolean;
   matched: boolean;
 }
+
+

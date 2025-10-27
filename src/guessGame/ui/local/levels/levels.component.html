@@ -1,0 +1,54 @@
+<div class="overflow-x-auto m-10">
+    <table class="table">
+        <!-- head -->
+        <thead>
+        <tr>
+            <th>
+            <label>
+                Nivel
+            </label>
+            </th>
+            <th>Categoría</th>
+            <th>Estatus</th>
+            <th>Puntuación Máxima</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @for(levels of userData()!; track $index){
+            <tr>
+                <th>
+                <label>
+                    {{levels.level}}
+                </label>
+                </th>
+                <td>
+                <div class="flex items-center gap-3">
+                    <div class="avatar">
+                    <div class="mask mask-squircle h-12 w-12">
+                        <img
+                        src="carta_volteada.jpg"
+                        alt="Avatar Tailwind CSS Component" />
+                    </div>
+                    </div>
+                    <div>
+                    <div class="font-bold">{{levels.name}}</div>
+                    <div class="text-sm opacity-50">{{levels.grade}}</div>
+                    </div>
+                </div>
+                </td>
+                <td>
+                    @if(levels.unlocked){
+                        <span class="badge badge-ghost badge-sm">Desbloqueado</span>
+                    }@else{
+                        <span class="badge badge-ghost badge-sm">Bloqueado</span>
+                    }
+                </td>
+                <td>{{levels.points}}</td>
+                <th>
+                <button class="btn btn-ghost btn-xs" [disabled]="!levels.unlocked" (click)="play(levels.level)">Jugar</button>
+                </th>
+            </tr>
+        }
+    </table>
+</div>

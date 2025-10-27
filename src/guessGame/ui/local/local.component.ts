@@ -17,6 +17,7 @@ import {
   LocalManagerService,
 } from '../../../shared/LocalManager/storage.servicee';
 import { GuessUseCaseService } from '../../application/guess-use-case.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-local',
@@ -30,8 +31,10 @@ export class LocalComponent implements OnInit {
 
   _guessUseCase = inject(GuessUseCaseService);
   _decodeJwtService = inject(DecodeJwtService);
+  _route = inject(ActivatedRoute);
 
   searchControl = new FormControl('');
+  level = 0;
   usedSigns = signal<Set<string>>(new Set());
   currentSign: WritableSignal<ApiDictionaryContent | null> = signal(null);
   isGameOver = signal(false);
@@ -51,8 +54,9 @@ export class LocalComponent implements OnInit {
   lastGameData = signal<{ points: number; quantity: number } | null>(null);
 
   ngOnInit() {
+    this.level = Number(this._route.snapshot.paramMap.get('level'));
     // Simula la carga de datos desde un servicio
-    this._guessUseCase.getAllContent().subscribe((data) => {
+    this._guessUseCase.getAllContent(this.level).subscribe((data) => {
       this.allSigns = data;
       this.isLoading.set(false);
       this.startTime = Date.now();

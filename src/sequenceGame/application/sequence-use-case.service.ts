@@ -8,8 +8,12 @@ import { SequenceGame } from '../infrastructure/models/sequence-local-api.modal'
 export class SequenceUseCaseService {
   _sequenceApiService = inject(SequenceApiService);
 
-  getAllContent() {
-    return this._sequenceApiService.getAllContent();
+  getAllContent(level:number) {
+    return this._sequenceApiService.getAllContent(level);
+  }
+
+  getLevels(id:string){
+    return this._sequenceApiService.getLevels(id);
   }
 
   getUserPoints(id: string) {
