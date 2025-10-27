@@ -81,10 +81,23 @@ export const routes: Routes = [
         children: [
           {
             path: 'local',
-            loadComponent: () =>
-              import('../sequenceGame/ui/local/local.component').then(
-                (m) => m.LocalComponent
-              ),
+            canActivate: [AuthGuard],
+            children: [
+              {
+                path: '',
+                loadComponent: () => 
+                  import('../memoryGame/ui/memory-local/levels/levels.component').then(
+                    (m) => m.LevelsComponent
+                  ),
+              },
+              {
+                path: 'game/:level',
+                loadComponent: () =>
+                  import('../sequenceGame/ui/local/local.component').then(
+                    (m) => m.LocalComponent
+                  ),
+              }
+            ]
           },
           {
             path: 'online',
@@ -101,10 +114,23 @@ export const routes: Routes = [
         children: [
           {
             path: 'local',
-            loadComponent: () =>
-              import(
-                '../memoryGame/ui/memory-local/memory-local.component'
-              ).then((m) => m.MemoryLocalComponent),
+            canActivate: [AuthGuard],
+            children: [
+              {
+                path: '',
+                loadComponent: () => 
+                  import('../memoryGame/ui/memory-local/levels/levels.component').then(
+                    (m) => m.LevelsComponent
+                  ),
+              },
+              {
+                path: 'game/:level',
+                loadComponent: () =>
+                  import('../memoryGame/ui/memory-local/memory-local.component').then(
+                    (m) => m.MemoryLocalComponent
+                  ),
+              }
+            ]
           },
           {
             path: 'pvp',
