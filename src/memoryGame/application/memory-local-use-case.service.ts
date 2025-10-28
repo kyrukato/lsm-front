@@ -43,6 +43,7 @@ export class MemoryLocalUseCaseService {
 
   private initializeGame() {
     this.level = Number(this._route.snapshot.paramMap.get('level'));
+    console.log('nivel desde url: ',this.level);
     this._memoryApiService.getAllContent(this.level).subscribe((data) => {
       const selectedCards = data.sort(() => 0.5 - Math.random()).slice(0, 8);
       const deck = [...selectedCards, ...selectedCards]

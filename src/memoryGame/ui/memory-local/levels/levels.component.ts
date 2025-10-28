@@ -34,6 +34,7 @@ export class LevelsComponent implements OnInit {
     if (token) {
       const userID = this._decodeJWTService.decodeId(token);
       this._memoryService.getLevels(userID).subscribe((data) => {
+        console.log(data);
         const levels = data.sort((a,b) => a.level - b.level).slice(0,5);
         const merged = this.categories.map( cat => {
           const userLevel = levels.find(l => l.level === cat.level);

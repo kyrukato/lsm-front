@@ -37,9 +37,9 @@ export class MemoryApiService implements MemoryLocalGame {
       default:
         break;
     }
+    console.log('level: ',level, ' Categoría: ',category)
     return this._httpClient.get<ApiDictionaryContent[]>(
-        `${this.URL_DICTIONARY}/${category}`
-      );
+        `${this.URL_DICTIONARY}/${category}`);
   }
   // getAllContent(): Observable<ApiDictionaryContent[]> {
   //   // Devuelve todas las palabras del diccionario de todas las categorías

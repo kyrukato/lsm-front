@@ -6,6 +6,7 @@ import { DashboardComponent } from '../shared/pages/dashboard/dashboard.componen
 import { AuthGuard } from '../auth/application/user/auth.guard';
 import { ProfileComponent } from '../profile/ui/profile-component/profile.component';
 import { DictionaryComponent } from '../dictionary/ui/dictionary/dictionary.component';
+import { RankingsComponent } from '../ranking/ui/rankings/rankings.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,11 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'ranking',
+        component: RankingsComponent,
         canActivate: [AuthGuard],
       },
       {

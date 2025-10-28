@@ -1,0 +1,44 @@
+<div class="overflow-x-auto m-5">
+    <table class="table">
+        <!-- head -->
+        <thead>
+        <tr>
+            <th>
+            <label>
+                Posición
+            </label>
+            </th>
+            <th>Jugador</th>
+            <th>Victorias</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for(rank of ranking()!; track $index){
+            <tr>
+                <th>
+                <label>
+                    {{$index +1}}
+                </label>
+                </th>
+                <td>
+                <div class="flex items-center gap-3">
+                    <div class="avatar">
+                    <div class="mask mask-squircle h-12 w-12">
+                        <img
+                        src="carta_volteada.jpg"
+                        alt="Avatar Tailwind CSS Component" />
+                    </div>
+                    </div>
+                    <div>
+                    <div class="font-bold">{{rank.user}}</div>
+                    <div class="text-sm opacity-50"></div>
+                    </div>
+                </div>
+                </td>
+                <td>
+                    <span class="badge badge-ghost badge-sm">{{rank.victorys}}</span>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
