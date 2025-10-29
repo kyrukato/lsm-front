@@ -5,13 +5,14 @@ export interface TokenContainer {
 
 /** Datos necesarios para el login */
 export interface AuthData {
-  readonly email: string;
   readonly password: string;
+  readonly email: string;
 }
 
 /** Datos necesarios para el registro */
 export interface RegisterData extends AuthData {
   readonly name: string;
+  readonly nickname: string;
 }
 
 /** Respuesta del login que contiene el token */

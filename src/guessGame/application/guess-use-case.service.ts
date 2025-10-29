@@ -8,12 +8,16 @@ import { GuessApiGame } from '../infrastructure/models/guess-api.model';
 export class GuessUseCaseService {
   private _guessApiService = inject(GuessApiService);
 
-  getAllContent() {
-    return this._guessApiService.getAllContent();
+  getAllContent(level:number) {
+    return this._guessApiService.getAllContent(level);
   }
 
   getUserPoints(id: string) {
     return this._guessApiService.getUserPoints(id);
+  }
+
+  getLevels(id: string){
+    return this._guessApiService.getLevels(id);
   }
 
   updateUserPoints(data: GuessApiGame) {

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { MemoryApiGame } from './models/memory-api.model';
+import { MemoryApiGame, MemoryLevel } from './models/memory-api.model';
 import { forkJoin, map, Observable } from 'rxjs';
 import { MemoryLocalGame } from './memory-api.interface';
 import { HttpClient } from '@angular/common/http';
@@ -14,28 +14,58 @@ export class MemoryApiService implements MemoryLocalGame {
   private URL_DICTIONARY = environment.URL_DICTIONARY;
   private URL_MEMORY_LOCAL = environment.URL_MEMORY_LOCAL;
 
-  getAllContent(): Observable<ApiDictionaryContent[]> {
+  getAllContent(level:number): Observable<ApiDictionaryContent[]> {
     // Devuelve todas las palabras del diccionario de todas las categorías
-    const categories = [
-      'Abecedario',
-      'Numeros',
-      'Colores',
-      'Frutas-Verduras',
-      'Fechas',
-    ];
-    const requests = categories.map((category) =>
-      this._httpClient.get<ApiDictionaryContent[]>(
-        `${this.URL_DICTIONARY}/${category}`
-      )
-    );
-
-    return forkJoin(requests).pipe(map((responses) => responses.flat()));
+    let category = ''
+    switch (level) {
+      case 1:
+        category = 'Abecedario'
+        break;
+      case 2:
+        category = 'Numeros'
+        break;
+      case 3:
+        category = 'Colores'
+        break;
+      case 4:
+        category = 'Frutas-Verduras'
+        break;
+      case 5:
+        category = 'Fechas'
+        break;
+    
+      default:
+        break;
+    }
+    console.log('level: ',level, ' Categoría: ',category)
+    return this._httpClient.get<ApiDictionaryContent[]>(
+        `${this.URL_DICTIONARY}/${category}`);
   }
+  // getAllContent(): Observable<ApiDictionaryContent[]> {
+  //   // Devuelve todas las palabras del diccionario de todas las categorías
+  //   const categories = [
+  //     'Abecedario',
+  //     'Numeros',
+  //     'Colores',
+  //     'Frutas-Verduras',
+  //     'Fechas',
+  //   ];
+  //   const requests = categories.map((category) =>
+  //     this._httpClient.get<ApiDictionaryContent[]>(
+  //       `${this.URL_DICTIONARY}/${category}`
+  //     )
+  //   );
+
+  //   return forkJoin(requests).pipe(map((responses) => responses.flat()));
+  // }
 
   getUserPoints(id: string): Observable<MemoryApiGame> {
     return this._httpClient.get<MemoryApiGame>(
       `${this.URL_MEMORY_LOCAL}/${id}`
     );
+  }
+  getLevels(id:string): Observable<MemoryLevel[]>{
+    return this._httpClient.get<MemoryLevel[]>(`${this.URL_MEMORY_LOCAL}/level/${id}`);
   }
   updateUserPoints(data: MemoryApiGame): Observable<MemoryApiGame> {
     return this._httpClient.patch<MemoryApiGame>(

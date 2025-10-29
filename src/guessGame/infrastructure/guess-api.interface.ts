@@ -3,7 +3,7 @@ import { ApiDictionaryContent } from '../../dictionary/infrastructure/models/dic
 import { GuessApiGame } from './models/guess-api.model';
 
 export interface GuessLocalGame {
-  getAllContent(): Observable<ApiDictionaryContent[]>;
+  getAllContent(level:Number): Observable<ApiDictionaryContent[]>;
 
   getUserPoints(id: string): Observable<GuessApiGame>;
 

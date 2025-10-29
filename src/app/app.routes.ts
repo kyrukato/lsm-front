@@ -6,6 +6,7 @@ import { DashboardComponent } from '../shared/pages/dashboard/dashboard.componen
 import { AuthGuard } from '../auth/application/user/auth.guard';
 import { ProfileComponent } from '../profile/ui/profile-component/profile.component';
 import { DictionaryComponent } from '../dictionary/ui/dictionary/dictionary.component';
+import { RankingsComponent } from '../ranking/ui/rankings/rankings.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'ranking',
+        component: RankingsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'dictionary',
         component: DictionaryComponent,
         canActivate: [AuthGuard],
@@ -48,10 +54,23 @@ export const routes: Routes = [
         children: [
           {
             path: 'local',
-            loadComponent: () =>
-              import('../guessGame/ui/local/local.component').then(
-                (m) => m.LocalComponent
-              ),
+            canActivate: [AuthGuard],
+            children: [
+              {
+                path: '',
+                loadComponent: () =>
+                  import('../guessGame/ui/local/levels/levels.component').then(
+                    (m) => m.LevelsComponent
+                  ),
+              },
+              {
+                path: 'game/:level',
+                loadComponent: () =>
+                  import('../guessGame/ui/local/local.component').then(
+                    (m) => m.LocalComponent
+                  ),
+              },
+            ],
           },
           {
             path: 'online',
@@ -68,10 +87,23 @@ export const routes: Routes = [
         children: [
           {
             path: 'local',
-            loadComponent: () =>
-              import('../sequenceGame/ui/local/local.component').then(
-                (m) => m.LocalComponent
-              ),
+            canActivate: [AuthGuard],
+            children: [
+              {
+                path: '',
+                loadComponent: () => 
+                  import('../sequenceGame/ui/local/levels/levels.component').then(
+                    (m) => m.LevelsComponent
+                  ),
+              },
+              {
+                path: 'game/:level',
+                loadComponent: () =>
+                  import('../sequenceGame/ui/local/local.component').then(
+                    (m) => m.LocalComponent
+                  ),
+              }
+            ]
           },
           {
             path: 'online',
@@ -88,10 +120,23 @@ export const routes: Routes = [
         children: [
           {
             path: 'local',
-            loadComponent: () =>
-              import(
-                '../memoryGame/ui/memory-local/memory-local.component'
-              ).then((m) => m.MemoryLocalComponent),
+            canActivate: [AuthGuard],
+            children: [
+              {
+                path: '',
+                loadComponent: () => 
+                  import('../memoryGame/ui/memory-local/levels/levels.component').then(
+                    (m) => m.LevelsComponent
+                  ),
+              },
+              {
+                path: 'game/:level',
+                loadComponent: () =>
+                  import('../memoryGame/ui/memory-local/memory-local.component').then(
+                    (m) => m.MemoryLocalComponent
+                  ),
+              }
+            ]
           },
           {
             path: 'pvp',

@@ -8,6 +8,7 @@ import {
   WholeWord,
   Swords,
   Sword,
+  Trophy,
 } from 'lucide-angular';
 
 @Component({
@@ -23,5 +24,6 @@ export class MenuItemsComponent {
   readonly PuzzleIcon = Puzzle;
   readonly ListIcon = List;
   readonly OnlineIcon = Swords;
-  readonly LocalIcon = Sword
+  readonly LocalIcon = Sword;
+  readonly Ranking = Trophy;
 }

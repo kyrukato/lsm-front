@@ -58,7 +58,7 @@ export class AuthApiService implements AuthApi {
     user: RegisterData
     // confirmPassword: string
   ): Observable<RegisterResponse> {
-    const { name, email, password } = user;
+    const { name, email, password, nickname } = user;
 
     return this._httpClient
       .post<RegisterResponse>(
@@ -67,6 +67,7 @@ export class AuthApiService implements AuthApi {
           email,
           password,
           name,
+          nickname,
           // confirmPassword,
         }
       )

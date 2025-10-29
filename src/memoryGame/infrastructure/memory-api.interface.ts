@@ -3,7 +3,7 @@ import { ApiDictionaryContent } from '../../dictionary/infrastructure/models/dic
 import { MemoryApiGame } from './models/memory-api.model';
 
 export interface MemoryLocalGame {
-  getAllContent(): Observable<ApiDictionaryContent[]>;
+  getAllContent(level:number): Observable<ApiDictionaryContent[]>;
 
   getUserPoints(id: string): Observable<MemoryApiGame>;
 
