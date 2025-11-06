@@ -21,7 +21,7 @@ import {
   LocalManagerService,
 } from '../../../shared/LocalManager/storage.servicee';
 import { SequenceUseCaseService } from '../../application/sequence-use-case.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-local',
@@ -37,6 +37,7 @@ export class LocalComponent implements OnInit {
   private _sequenceUseCase = inject(SequenceUseCaseService);
   private _decodeJwtService = inject(DecodeJwtService);
   private _route = inject(ActivatedRoute);
+  private _router = inject(Router)
 
   // Form Control
   searchControl = new FormControl('');
@@ -216,5 +217,9 @@ export class LocalComponent implements OnInit {
   showModal(imageURL: string) {
     this.modalImage.set(imageURL);
     (document.getElementById('imageModal') as HTMLDialogElement).showModal();
+  }
+
+  backLevels(){
+    this._router.navigate(['/dashboard/sequence/local'])
   }
 }

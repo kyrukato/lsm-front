@@ -17,7 +17,7 @@ import {
   LocalManagerService,
 } from '../../../shared/LocalManager/storage.servicee';
 import { GuessUseCaseService } from '../../application/guess-use-case.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-local',
@@ -32,6 +32,7 @@ export class LocalComponent implements OnInit {
   _guessUseCase = inject(GuessUseCaseService);
   _decodeJwtService = inject(DecodeJwtService);
   _route = inject(ActivatedRoute);
+  _router = inject(Router)
 
   searchControl = new FormControl('');
   level = 0;
@@ -181,5 +182,9 @@ export class LocalComponent implements OnInit {
       // Handle the case where the token is null
       console.error('Token is null');
     }
+  }
+
+  backLevels(){
+    this._router.navigate(['dashboard/guess/local'])
   }
 }

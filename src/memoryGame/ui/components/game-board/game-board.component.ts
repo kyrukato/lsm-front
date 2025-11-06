@@ -2,6 +2,8 @@ import { Component, inject, input, OnInit } from '@angular/core';
 import { MemoryLocalUseCaseService } from '../../../application/memory-local-use-case.service';
 import { CardMemoryGameModel } from '../../../domain/memory-local.model';
 import { CardComponent } from '../card/card.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-game-board',
@@ -11,6 +13,7 @@ import { CardComponent } from '../card/card.component';
   styleUrl: './game-board.component.css',
 })
 export class GameBoardComponent implements OnInit{
+  private _router = inject(Router)
   private _memoryLocalUseCaseService = inject(MemoryLocalUseCaseService);
   level = input<number>();
 
@@ -18,6 +21,7 @@ export class GameBoardComponent implements OnInit{
   isGameEnded = this._memoryLocalUseCaseService.isGameEnded;
   moves = this._memoryLocalUseCaseService.moves;
   elapsedTime = this._memoryLocalUseCaseService.elapsedTime;
+  
   
   ngOnInit(): void {
     console.log('Nivel desde tablero: ', this.level());
@@ -30,5 +34,9 @@ export class GameBoardComponent implements OnInit{
   restartGame() {
     // relaod page
     window.location.reload();
+  }
+
+  backLevels(){
+    this._router.navigate(['dashboard/memory/local'])
   }
 }
