@@ -24,7 +24,6 @@ export class GameBoardComponent implements OnInit{
   
   
   ngOnInit(): void {
-    console.log('Nivel desde tablero: ', this.level());
     this._memoryLocalUseCaseService.setLevel(this.level()!);
   }
   onCardClick(card: CardMemoryGameModel) {

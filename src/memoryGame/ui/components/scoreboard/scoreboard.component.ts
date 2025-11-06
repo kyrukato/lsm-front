@@ -16,6 +16,7 @@ export class ScoreboardComponent {
   matchedPairs = this._MemoryLocalUseCaseService.matchedPairs;
   totalPairs = this._MemoryLocalUseCaseService.totalPairs;
   elapsedTime = this._MemoryLocalUseCaseService.elapsedTime;
+  points = this._MemoryLocalUseCaseService.points;
 
   constructor() {
     this.startTimer();

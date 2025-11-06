@@ -1,7 +1,7 @@
 import { Grades } from "../../../shared/interfaces/grades.interface";
 
 export interface MemoryApiGame {
-  id: string;
+  userID: string;
   points: number;
 }
 
