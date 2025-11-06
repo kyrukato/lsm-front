@@ -1,22 +1,27 @@
 import { CardMemoryGameModel } from './../domain/memory-local.model';
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, input, OnInit, signal } from '@angular/core';
 import { MemoryApiService } from '../infrastructure/memory-api.service';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { LocalKeys, LocalManagerService } from '../../shared/LocalManager/storage.servicee';
+import { response } from 'express';
+import { DecodeJwtService } from '../../shared/LocalManager/decode.jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MemoryLocalUseCaseService {
   private _memoryApiService = inject(MemoryApiService);
+  private _decodeJWTService = inject(DecodeJwtService);
   _route = inject(ActivatedRoute);
 
   cards = signal<CardMemoryGameModel[]>([]);
   moves = signal<number>(0);
+  points = signal<number>(0);
   elapsedTime = signal<number>(0);
   gameOver = new Subject<void>();
   isGameEnded = signal<boolean>(true);
-  level = 0;
+  level =0;
 
   flippedCards = signal<CardMemoryGameModel[]>([]);
   matchedPairs = computed(
@@ -27,9 +32,8 @@ export class MemoryLocalUseCaseService {
   );
 
   totalPairs = computed(() => this.cards().length / 2);
-
+  
   constructor() {
-    this.initializeGame();
     // Effect to check for game over
     effect(
       () => {
@@ -40,10 +44,12 @@ export class MemoryLocalUseCaseService {
       { allowSignalWrites: true }
     );
   }
-
+  
+  setLevel(level: number){
+    this.level = level;
+    this.initializeGame();
+  }
   private initializeGame() {
-    this.level = Number(this._route.snapshot.paramMap.get('level'));
-    console.log('nivel desde url: ',this.level);
     this._memoryApiService.getAllContent(this.level).subscribe((data) => {
       const selectedCards = data.sort(() => 0.5 - Math.random()).slice(0, 8);
       const deck = [...selectedCards, ...selectedCards]
@@ -61,6 +67,7 @@ export class MemoryLocalUseCaseService {
 
       this.cards.set(deck);
       this.moves.set(0);
+      this.points.set(0);
       this.elapsedTime.set(0);
       this.flippedCards.set([]);
       this.isGameEnded.set(false);
@@ -96,6 +103,7 @@ export class MemoryLocalUseCaseService {
         )
       );
       this.flippedCards.set([]);
+      this.points.set(this.points() + 20);
     } else {
       setTimeout(() => {
         this.cards.update((cards) =>
@@ -117,7 +125,29 @@ export class MemoryLocalUseCaseService {
   }
 
   private endGame(): void {
+    if(this.moves() === 8){
+      this.points.set(this.points() + 300);
+    } else if(this.moves() > 8 && this.moves() < 10){
+      this.points.set(this.points() + 250);
+    } else if(this.moves() >= 10 && this.moves() < 12){
+      this.points.set(this.points() + 200);
+    } else if(this.moves() >= 12 && this.moves() < 15){
+      this.points.set(this.points() + 150);
+    } else if(this.moves() >= 15 && this.moves() < 18){
+      this.points.set(this.points() + 50);
+    }
+    const token = LocalManagerService.getElement(LocalKeys.token);
+    const userId = this._decodeJWTService.decodeId(token!);
+    console.log(userId);
+    const data = {
+      userID: userId,
+      points: this.points()
+    };
+    this._memoryApiService.updateUserPoints(data).subscribe((response) => {
+      console.log(response);
+    });
     this.isGameEnded.set(true);
+    
     this.gameOver.next();
     console.log(
       'Game Over! Total moves:',

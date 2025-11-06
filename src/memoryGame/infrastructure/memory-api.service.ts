@@ -41,23 +41,6 @@ export class MemoryApiService implements MemoryLocalGame {
     return this._httpClient.get<ApiDictionaryContent[]>(
         `${this.URL_DICTIONARY}/${category}`);
   }
-  // getAllContent(): Observable<ApiDictionaryContent[]> {
-  //   // Devuelve todas las palabras del diccionario de todas las categorías
-  //   const categories = [
-  //     'Abecedario',
-  //     'Numeros',
-  //     'Colores',
-  //     'Frutas-Verduras',
-  //     'Fechas',
-  //   ];
-  //   const requests = categories.map((category) =>
-  //     this._httpClient.get<ApiDictionaryContent[]>(
-  //       `${this.URL_DICTIONARY}/${category}`
-  //     )
-  //   );
-
-  //   return forkJoin(requests).pipe(map((responses) => responses.flat()));
-  // }
 
   getUserPoints(id: string): Observable<MemoryApiGame> {
     return this._httpClient.get<MemoryApiGame>(
