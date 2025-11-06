@@ -9,7 +9,11 @@ import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthUserUseCaseService } from '../../application/user/auth-user-use-case.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { confirmPasswordValidator } from './register.validators';
+import { 
+  confirmPasswordValidator,
+  onlyLettersValidator,
+  noSpacesValidator
+} from './register.validators';
 
 interface RegisterBodyApi {
   name: FormControl<string>;
@@ -47,11 +51,11 @@ export class RegisterComponent {
     {
       name: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required, onlyLettersValidator()],
       }),
       nickname: new FormControl('',{
         nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required,noSpacesValidator()],
       }),
       email: new FormControl('', {
         nonNullable: true,
@@ -59,7 +63,7 @@ export class RegisterComponent {
       }),
       password: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required, noSpacesValidator()],
       }),
       confirmPassword: new FormControl('', {
         nonNullable: true,
