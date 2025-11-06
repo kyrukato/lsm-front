@@ -1,5 +1,5 @@
 import { CardMemoryGameModel } from './../domain/memory-local.model';
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, input, OnInit, signal } from '@angular/core';
 import { MemoryApiService } from '../infrastructure/memory-api.service';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -16,7 +16,7 @@ export class MemoryLocalUseCaseService {
   elapsedTime = signal<number>(0);
   gameOver = new Subject<void>();
   isGameEnded = signal<boolean>(true);
-  level = 0;
+  level =0;
 
   flippedCards = signal<CardMemoryGameModel[]>([]);
   matchedPairs = computed(
@@ -27,9 +27,8 @@ export class MemoryLocalUseCaseService {
   );
 
   totalPairs = computed(() => this.cards().length / 2);
-
+  
   constructor() {
-    this.initializeGame();
     // Effect to check for game over
     effect(
       () => {
@@ -40,9 +39,14 @@ export class MemoryLocalUseCaseService {
       { allowSignalWrites: true }
     );
   }
-
+  
+  setLevel(level: number){
+    this.level = level;
+    this.initializeGame();
+  }
   private initializeGame() {
-    this.level = Number(this._route.snapshot.paramMap.get('level'));
+    // this.level = Number(this._route.snapshot.paramMap.get('level'));
+    
     console.log('nivel desde url: ',this.level);
     this._memoryApiService.getAllContent(this.level).subscribe((data) => {
       const selectedCards = data.sort(() => 0.5 - Math.random()).slice(0, 8);
