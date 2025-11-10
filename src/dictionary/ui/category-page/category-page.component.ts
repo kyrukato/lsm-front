@@ -51,9 +51,10 @@ export class CategoryPageComponent implements OnInit {
     const category: DictionaryApiCategory = {
       category: formatCategory(this.cat),
     };
+    console.log(category);
     this._dictionaryApiService.getContent(category).subscribe((data) => {
       this.category = data;
-      // console.log(this.category);
+      console.log(this.category);
     });
   }
 
