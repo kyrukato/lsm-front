@@ -14,7 +14,7 @@ export class ServerService {
   actualizacionDeSala$ = new Subject<SalaBackend>()
   constructor() { 
     let Token = this.usuarioService.tokenUsuario();
-    this.manager = new Manager('https://backlsm-production.up.railway.app/n',{
+    this.manager = new Manager('https://backlsm-yctc.onrender.com/n',{
         extraHeaders:{
             authentication: Token,
         }
