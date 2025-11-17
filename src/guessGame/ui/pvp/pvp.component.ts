@@ -35,6 +35,9 @@ export class PvpComponent {
     effect(() => {
       if (this.juegoTerminado()) {
         setTimeout(() => this.modalAbierto.set(true), 0); // ✅ Sin necesidad de `allowSignalWrites`
+        if(this.ganador() === this.salaService.name()){
+          console.log('Éste es el ganador.')
+        }
       }
     });
     
