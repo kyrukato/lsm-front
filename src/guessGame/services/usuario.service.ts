@@ -1,4 +1,4 @@
-import { effect, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { LocalKeys, LocalManagerService } from '../../shared/LocalManager/storage.servicee';
 
 @Injectable({

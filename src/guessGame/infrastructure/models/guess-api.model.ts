@@ -6,6 +6,10 @@ export interface GuessApiGame {
   quantity: number;
 }
 
+export interface GuessPVP {
+  userID: string;
+}
+
 
 export interface GuessLevel {
   name: string;

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SequenceApiService } from '../infrastructure/sequence-api.service';
-import { SequenceGame } from '../infrastructure/models/sequence-local-api.modal';
+import { SequenceGame, SequencePVP } from '../infrastructure/models/sequence-local-api.modal';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,9 @@ export class SequenceUseCaseService {
 
   saveUserPoints(data: SequenceGame) {
     return this._sequenceApiService.saveUserPoints(data);
+  }
+
+  updateVictorys(data: SequencePVP) {
+    return this._sequenceApiService.updateVictorys(data);
   }
 }

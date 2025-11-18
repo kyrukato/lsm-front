@@ -4,7 +4,7 @@ import { Observable, forkJoin, map } from 'rxjs';
 import { ApiDictionaryContent } from '../../dictionary/infrastructure/models/dictionary-api.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
-import { SequenceGame, SequenceLevel } from './models/sequence-local-api.modal';
+import { SequenceGame, SequenceLevel, SequencePVP } from './models/sequence-local-api.modal';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,7 @@ export class SequenceApiService implements SequenceLocalGame {
   private _httpClient = inject(HttpClient);
   private URL_DICTIONARY = environment.URL_DICTIONARY;
   private URL_SEQUENCE_LOCAL = environment.URL_SEQUENCE_LOCAL;
+  private URL_SEQUENCE_PVP = environment.URL_SEQUENCE_PVP;
 
   getAllContent(level:number): Observable<ApiDictionaryContent[]> {
     // Devuelve todas las palabras del diccionario de todas las categorías
@@ -75,6 +76,12 @@ export class SequenceApiService implements SequenceLocalGame {
     return this._httpClient.patch<SequenceGame>(
       `${this.URL_SEQUENCE_LOCAL}/update`,
       data
+    );
+  }
+
+  updateVictorys(data: SequencePVP): Observable<SequencePVP> {
+    return this._httpClient.patch<SequencePVP>(`${this.URL_SEQUENCE_PVP}/update`
+      ,data
     );
   }
 }

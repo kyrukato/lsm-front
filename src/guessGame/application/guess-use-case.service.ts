@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GuessApiService } from '../infrastructure/guess-api.service';
-import { GuessApiGame } from '../infrastructure/models/guess-api.model';
+import { GuessApiGame, GuessPVP } from '../infrastructure/models/guess-api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,9 @@ export class GuessUseCaseService {
 
   updateUserPoints(data: GuessApiGame) {
     return this._guessApiService.updateUserPoints(data);
+  }
+
+  updateVictorys(data: GuessPVP){
+    return this._guessApiService.updatePVPVictorys(data);
   }
 }

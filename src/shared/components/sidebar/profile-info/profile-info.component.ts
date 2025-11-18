@@ -29,6 +29,7 @@ export class ProfileInfoComponent implements OnInit {
     email: '',
     isAcive: false,
     rol: '',
+    nickname: '',
   };
 
   userAvatar = '';

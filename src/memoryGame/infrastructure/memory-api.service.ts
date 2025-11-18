@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { MemoryApiGame, MemoryLevel } from './models/memory-api.model';
+import { MemoryApiGame, MemoryLevel, MemoryPVP } from './models/memory-api.model';
 import { forkJoin, map, Observable } from 'rxjs';
 import { MemoryLocalGame } from './memory-api.interface';
 import { HttpClient } from '@angular/common/http';
@@ -13,6 +13,7 @@ export class MemoryApiService implements MemoryLocalGame {
   private _httpClient = inject(HttpClient);
   private URL_DICTIONARY = environment.URL_DICTIONARY;
   private URL_MEMORY_LOCAL = environment.URL_MEMORY_LOCAL;
+  private URL_MEMORY_PVP = environment.URL_MEMORY_PVP;
 
   getAllContent(level:number): Observable<ApiDictionaryContent[]> {
     // Devuelve todas las palabras del diccionario de todas las categorías
@@ -58,5 +59,9 @@ export class MemoryApiService implements MemoryLocalGame {
   }
   compareWords(word: string, wordToCompare: string): boolean {
     return word === wordToCompare;
+  }
+
+  updateVictorys(data: MemoryPVP): Observable<MemoryPVP> {
+    return this._httpClient.patch<MemoryPVP>(`${this.URL_MEMORY_PVP}/update`,data);
   }
 }

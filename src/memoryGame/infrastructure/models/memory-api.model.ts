@@ -5,6 +5,10 @@ export interface MemoryApiGame {
   points: number;
 }
 
+export interface MemoryPVP {
+  userID: string;
+}
+
 export interface MemoryLevel {
   name: string;
   grade: Grades;

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { ApiDictionaryContent } from '../../dictionary/infrastructure/models/dictionary-api.model';
-import { GuessApiGame } from './models/guess-api.model';
+import { GuessApiGame, GuessPVP } from './models/guess-api.model';
 
 export interface GuessLocalGame {
   getAllContent(level:Number): Observable<ApiDictionaryContent[]>;
@@ -8,5 +8,7 @@ export interface GuessLocalGame {
   getUserPoints(id: string): Observable<GuessApiGame>;
 
   updateUserPoints(data: GuessApiGame): Observable<GuessApiGame>;
+
+  updatePVPVictorys(data: GuessPVP): Observable<GuessPVP>;
 
 }

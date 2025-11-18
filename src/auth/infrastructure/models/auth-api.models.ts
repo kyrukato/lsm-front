@@ -37,4 +37,5 @@ export interface UserResponse extends UserToken {
   readonly name: string;
   readonly isAcive: boolean;
   readonly rol: string;
+  readonly nickname: string;
 }

@@ -6,6 +6,10 @@ export interface SequenceGame {
   userID: string;
 }
 
+export interface SequencePVP {
+  userID: string;
+}
+
 export interface SequenceLevel {
   name: string;
   grade: Grades;

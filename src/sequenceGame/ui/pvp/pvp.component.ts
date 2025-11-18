@@ -3,6 +3,11 @@ import { SalaService } from '../../services/sala.service';
 import { ServerService } from '../../services/server.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DecodeJwtService } from '../../../shared/LocalManager/decode.jwt';
+import { AuthUserUseCaseService } from '../../../auth/application/user/auth-user-use-case.service';
+import { SequenceUseCaseService } from '../../application/sequence-use-case.service';
+import { SequencePVP } from '../../infrastructure/models/sequence-local-api.modal';
+import { response } from 'express';
 
 @Component({
   selector: 'app-pvp',
@@ -14,11 +19,16 @@ import { FormsModule } from '@angular/forms';
 export class PvpComponent {
   serverService = inject(ServerService);
   salaService = inject(SalaService);
+  decodeJWTService = inject(DecodeJwtService);
+  authService = inject(AuthUserUseCaseService);
+  sequenceService = inject(SequenceUseCaseService);
   userInput = signal<string>('');
   showModal = signal<boolean>(false);
   showSequence = signal<boolean>(false);
   currentSequenceIndex = signal<number>(0);
   sequenceStarted = signal<boolean>(false);
+  player1 = signal<string>('');
+  player2 = signal<string>('');
 
   juegoTerminado = computed(() => {
     return this.salaService.estado() === 'VICTORIA_P1' || 
@@ -28,11 +38,11 @@ export class PvpComponent {
 
   ganador = computed(() => {
     if (this.salaService.estado() === 'VICTORIA_P1') {
-      return this.salaService.jugador1().name;
+      return this.player1();
     } else if (this.salaService.estado() === 'VICTORIA_P2') {
-      return this.salaService.jugador2().name;
+      return this.player2();
     } else {
-      return null;
+      return 'EMPATE';
     }
   });
 
@@ -42,8 +52,45 @@ export class PvpComponent {
 
   constructor() {
     effect(() => {
+      const p1 = this.salaService.jugador1().name;
+      if(p1){
+        this.authService.getUserData(p1).subscribe((data) => {
+          this.player1.set(data.nickname);
+        });
+      }
+    });
+    
+    effect(() => {
+      const p2 = this.salaService.jugador2().name;
+      if(p2){
+        this.authService.getUserData(p2).subscribe((data) => {
+          this.player2.set(data.nickname);
+        });
+      }
+    });
+
+    effect(() => {
       if (this.juegoTerminado()) {
         setTimeout(() => this.showModal.set(true), 0);
+        if(this.ganador() === this.player1()){
+          const token = this.salaService.jugador1().name;
+          const userID = this.decodeJWTService.decodeId(token);
+          const data:SequencePVP = {
+            userID: userID,
+          }
+          this.sequenceService.updateVictorys(data).subscribe((response) => {
+            console.log(response);
+          });
+        } else if(this.ganador() === this.player2()){
+          const token = this.salaService.jugador2().name;
+          const userID = this.decodeJWTService.decodeId(token);
+          const data:SequencePVP = {
+            userID: userID,
+          }
+          this.sequenceService.updateVictorys(data).subscribe((response) => {
+            console.log(response);
+          });
+        }
       }
     });
 
@@ -102,7 +149,7 @@ export class PvpComponent {
   }
 
   enviarRespuesta() {
-    this.salaService.recibirRespuesta(this.userInput());
+    this.salaService.recibirRespuesta(this.userInput().toLocaleUpperCase());
     this.userInput.set('');
   }
 

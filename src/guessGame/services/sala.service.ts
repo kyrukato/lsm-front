@@ -71,7 +71,7 @@ export class SalaService {
     del jugador y se manda al server
   */
   jugar(respuestaJugador:string){
-    if(respuestaJugador === this.name()){
+    if(respuestaJugador.toLocaleUpperCase() === this.name()){
       this.respuesta.set('CORRECTA');
     }
     else{

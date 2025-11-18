@@ -7,13 +7,13 @@
         <div class="stat">
           <div class="stat-title">Jugador 1</div>
           <div class="stat-value text-primary text-2xl">
-            {{ salaService.jugador1().name }}
+            {{ player1() }}
           </div>
         </div>
         <div class="stat">
           <div class="stat-title">Jugador 2</div>
           <div class="stat-value text-secondary text-2xl">
-            {{ salaService.jugador2().name }}
+            {{ player2() }}
           </div>
         </div>
       </div>
@@ -70,12 +70,12 @@
         @switch (salaService.estado()) {
         @case ('VICTORIA_P1') {
         <p class="text-green-500 font-bold text-xl mb-4">
-          🏆 ¡Ganador: {{salaService.jugador1().name}}!
+          🏆 ¡Ganador: {{player1()}}!
         </p>
         }
         @case ('VICTORIA_P2') {
         <p class="text-green-500 font-bold text-xl mb-4">
-          🏆 ¡Ganador: {{salaService.jugador2().name}}!
+          🏆 ¡Ganador: {{player2()}}!
         </p>
         }
         @case ('ABANDONADO') {

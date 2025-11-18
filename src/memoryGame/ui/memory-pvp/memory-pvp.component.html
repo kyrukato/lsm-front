@@ -8,7 +8,7 @@
           <div class="stat-title">Jugador 1</div>
           <div class="stat-value text-primary text-2xl">
             @if (salaService.jugador1().name) {
-            {{salaService.jugador1().name}}
+            {{player1()}}
             } @else {
             Esperando...
             }
@@ -18,7 +18,7 @@
           <div class="stat-title">Jugador 2</div>
           <div class="stat-value text-secondary text-2xl">
             @if (salaService.jugador2().name) {
-            {{salaService.jugador2().name}}
+            {{player2()}}
             } @else {
             Esperando...
             }
@@ -91,5 +91,16 @@
 
 
     </div>
+    <!-- MODAL: Se muestra cuando el juego termina -->
+    @if (modalAbierto()) {
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm">
+        <h2 class="text-2xl font-bold text-blue-600">¡Juego Terminado!</h2>
+        <p class="text-lg mt-2">🏆 El ganador es: <span class="font-bold text-green-600">{{ ganador() }}</span></p>
+
+        <button class="btn btn-primary mt-4 w-full" (click)="cerrarModal()">Buscar Nueva Partida</button>
+      </div>
+    </div>
+    }
   </div>
 </main>

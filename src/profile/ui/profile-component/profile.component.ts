@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
     email: '',
     isAcive: false,
     rol: '',
+    nickname: '',
   };
 
   userAvatar = '';
